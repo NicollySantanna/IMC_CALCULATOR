@@ -1,13 +1,12 @@
 
 import { Modal } from "./modal.js"
 import { AlertError } from "./alertError.js"
+import {imc, notNumber} from "./utils.js"
 
 // Variáveis
 const form = document.querySelector("form")
 const peso = document.querySelector("#peso")
 const altura = document.querySelector("#altura")
-
-
 
 
 
@@ -24,22 +23,29 @@ form.onsubmit = function (e) {
        AlertError.open()
        return;
    }
-   AlertError.close()
-
+       AlertError.close()
     
     const result = imc (pesoUsuario, alturaUsuario)
-    const message = `Seu IMC é ${result}`
-    Modal.message.innerHTML = message 
-    Modal.open()
+    displayResultMessage(result)
 
+    function displayResultMessage(result) {
+        const message = `Seu IMC é ${result}`
+        Modal.message.innerHTML = message 
+        Modal.open()
+    }
+
+    // PARA LIMPAR OS INPUTS
+    peso.value = "";
+    altura.value = "";
+
+    // PARA FECHAR O ALERTA SEMPRE QUE EU MEXER NOS INPUTS
+    peso.oninput = () => {
+    AlertError.close()
 }
-// VALIDAÇÃO DOS INPUTS
-function notNumber (value) {
-    return isNaN (value) || value == ""
+    altura.oninput = () => {
+    AlertError.close()
 }
 
-function imc (pesoUsuario, alturaUsuario) {
-    return (pesoUsuario / ((alturaUsuario / 100) **2 )).toFixed(2)
 }
 
 // 2 maneiras diferentes de criar função
