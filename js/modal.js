@@ -19,3 +19,13 @@ export const Modal = {
 Modal.buttonClose.onclick = () => {
     Modal.close()
  }
+
+//  PARA FECHAR O MODAL COM A TECLA ESC DO TECLADO
+ window.addEventListener('keydown', handleKeydown)
+
+ function handleKeydown(event) {
+    
+    if (event.key == 'Escape') {
+        Modal.close()
+    }
+ }
